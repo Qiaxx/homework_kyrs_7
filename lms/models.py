@@ -1,5 +1,8 @@
 from django.db import models
 
+from config import settings
+
+
 
 class Course(models.Model):
     title = models.CharField(max_length=255)
@@ -7,6 +10,7 @@ class Course(models.Model):
         upload_to="course_previews/previews/", blank=True, null=True
     )
     description = models.TextField(blank=True, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="владелец")
 
     class Meta:
         verbose_name = "Курс"
@@ -26,6 +30,7 @@ class Lesson(models.Model):
     course = models.ForeignKey(
         Course, related_name="lessons", on_delete=models.CASCADE, blank=True, null=True
     )
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="владелец")
 
     class Meta:
         verbose_name = "Урок"
