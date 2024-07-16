@@ -8,7 +8,7 @@ from users.models import Payments
 
 
 class Command(BaseCommand):
-    help = 'Загружает данные платежей'
+    help = "Загружает данные платежей"
 
     def handle(self, *args, **kwargs):
         User = get_user_model()
@@ -19,24 +19,24 @@ class Command(BaseCommand):
 
         payments = [
             {
-                'user': user1,
-                'date_payment': datetime(2024, 7, 8, 12, 0),
-                'paid_course': course1,
-                'paid_lesson': None,
-                'amount': 100.00,
-                'payment_method': 'cash'
+                "user": user1,
+                "date_payment": datetime(2024, 7, 8, 12, 0),
+                "paid_course": course1,
+                "paid_lesson": None,
+                "amount": 100.00,
+                "payment_method": "cash",
             },
             {
-                'user': user2,
-                'date_payment': datetime(2024, 7, 9, 12, 0),
-                'paid_course': None,
-                'paid_lesson': lesson1,
-                'amount': 50.00,
-                'payment_method': 'bank_transfer'
-            }
+                "user": user2,
+                "date_payment": datetime(2024, 7, 9, 12, 0),
+                "paid_course": None,
+                "paid_lesson": lesson1,
+                "amount": 50.00,
+                "payment_method": "bank_transfer",
+            },
         ]
 
         for payment_data in payments:
             Payments.objects.create(**payment_data)
 
-        self.stdout.write(self.style.SUCCESS('Данные успешно загружены'))
+        self.stdout.write(self.style.SUCCESS("Данные успешно загружены"))

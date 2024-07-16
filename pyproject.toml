@@ -10,6 +10,7 @@ python = "^3.12"
 black = "^24.4.2"
 ipython = "^8.26.0"
 isort = "^5.13.2"
+coverage = "^7.6.0"
 
 
 [tool.poetry.group.dev.dependencies]
