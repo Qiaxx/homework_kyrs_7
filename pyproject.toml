@@ -11,6 +11,8 @@ black = "^24.4.2"
 ipython = "^8.26.0"
 isort = "^5.13.2"
 coverage = "^7.6.0"
+setuptools = "^71.0.4"
+stripe = "^10.4.0"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -22,6 +24,7 @@ python-dotenv = "^1.0.1"
 djangorestframework = "^3.15.2"
 django-filter = "^24.2"
 djangorestframework-simplejwt = "^5.3.1"
+drf-yasg = "^1.21.7"
 
 [build-system]
 requires = ["poetry-core"]

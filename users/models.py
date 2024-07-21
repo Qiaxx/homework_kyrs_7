@@ -67,6 +67,8 @@ class Payments(models.Model):
     )
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     payment_method = models.CharField(max_length=15, choices=PAYMENT_METHODS)
+    session_id = models.CharField(max_length=15, verbose_name='Id сессии', blank=True, null=True),
+    link = models.URLField(max_length=400, verbose_name='Ссылка на оплату', blank=True, null=True),
 
     class Meta:
         verbose_name = "Платеж"
