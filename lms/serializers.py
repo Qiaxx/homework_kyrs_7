@@ -1,4 +1,5 @@
-from rest_framework.serializers import ModelSerializer, SerializerMethodField, URLField
+from rest_framework.serializers import (ModelSerializer, SerializerMethodField,
+                                        URLField)
 
 from lms.models import Course, Lesson, Subscription
 from lms.validators import validate_lesson_url
