@@ -28,6 +28,12 @@ class User(AbstractUser):
         verbose_name="фото",
         help_text="Добавьте свое фото",
     )
+    last_login = models.DateTimeField(
+        auto_now_add=True, blank=True, null=True, verbose_name="Дата последнего входа"
+    )
+    is_active = models.BooleanField(
+        default=False, blank=True, null=True, verbose_name="Статус активности"
+    )
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

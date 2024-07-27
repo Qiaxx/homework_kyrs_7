@@ -1,5 +1,7 @@
+from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets
+from rest_framework import status, viewsets
+from rest_framework.decorators import action
 from rest_framework.generics import (CreateAPIView, DestroyAPIView,
                                      ListAPIView, RetrieveAPIView,
                                      UpdateAPIView)
@@ -7,6 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from config.settings import EMAIL_HOST_USER
 from lms.models import Course, Lesson, Subscription
 from lms.paginators import LmsPagination
 from lms.serializers import (CourseDetailSerializer, CourseSerializer,
@@ -40,6 +43,30 @@ class CourseViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+    @action(detail=True, methods=("put", "patch"))
+    def update_course_and_notify_subscribers(self, request, pk):
+        course = get_object_or_404(Course, pk=pk)
+        serializer = self.get_serializer(course, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+
+            # Получаем всех подписчиков курса
+            subscriptions = Subscription.objects.filter(course=course)
+            subscribers = [subscription.user for subscription in subscriptions]
+
+            # Отправка уведомлений подписчикам
+            for subscriber in subscribers:
+                send_mail(
+                    "Обновление курса",
+                    f'Курс "{course.title}" был обновлен.',
+                    EMAIL_HOST_USER,
+                    [subscriber.email],
+                    fail_silently=False,
+                )
+
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class LessonCreateAPIView(CreateAPIView):
