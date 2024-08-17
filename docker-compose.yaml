@@ -40,7 +40,7 @@ services:
   celery:
     build: .
     tty: true
-    command: celery -A config worker -l info
+    command: python -m celery -A config worker -l info
     restart: on-failure
     volumes:
       - .:/app
@@ -54,7 +54,7 @@ services:
   celery-beat:
     build: .
     tty: true
-    command: celery -A config beat -l info
+    command: python -m celery -A config beat -l info
     restart: on-failure
     volumes:
       - .:/app
